@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 
 const badges = [
   { icon: Shield, label: "ISO-Grade Quality" },
-  { icon: Clock, label: "Fast Delivery" },
-  { icon: Award, label: "20+ Years Experience" },
+  { icon: Clock, label: "Timely Delivery" },
+  { icon: Award, label: "30+ Years Experience" },
 ];
 
 const Hero = () => {
@@ -35,20 +35,20 @@ const Hero = () => {
               className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-full px-4 py-2 text-sm mb-8"
             >
               <span className="w-2 h-2 rounded-full bg-cta animate-pulse" />
-              Trusted Manufacturer Since 2002
+              Trusted Manufacturing Partner Since 1992
             </motion.div>
 
             {/* Headline */}
             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
               <span className="text-gradient-hero">Precision-Engineered</span>
               <br />
-              <span className="text-white">Press Components</span>
+              <span className="text-white">Industrial Components</span>
             </h1>
 
             {/* Subheadline */}
             <p className="text-lg md:text-xl text-white/80 mb-8 max-w-xl leading-relaxed">
-              Delivering high-quality industrial components with unmatched precision, 
-              reliability, and on-time delivery to power your manufacturing success.
+              Delivering reliable, high-quality components that add value to your 
+              products and businesses. Your trusted manufacturing partner.
             </p>
 
             {/* CTAs */}
@@ -97,7 +97,7 @@ const Hero = () => {
                   transition={{ delay: 0.5 }}
                   className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-6"
                 >
-                  <div className="text-4xl font-heading font-bold text-cta mb-2">20+</div>
+                  <div className="text-4xl font-heading font-bold text-cta mb-2">30+</div>
                   <div className="text-white/80 text-sm">Years in Business</div>
                 </motion.div>
                 <motion.div
