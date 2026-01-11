@@ -30,19 +30,19 @@ const Header = () => {
       <div className="hidden lg:block bg-primary text-primary-foreground py-2">
         <div className="container mx-auto px-6 flex justify-between items-center text-sm">
           <div className="flex items-center gap-6">
-            <a href="tel:+919876543210" className="flex items-center gap-2 hover:text-cta transition-colors">
+            <a href="tel:+919848020840" className="flex items-center gap-2 hover:text-cta transition-colors">
               <Phone className="w-4 h-4" />
-              <span>+91 98765 43210</span>
+              <span>+91 98480 20840</span>
             </a>
-            <a href="mailto:info@company.com" className="flex items-center gap-2 hover:text-cta transition-colors">
+            <a href="mailto:srichaitanya.industries@gmail.com" className="flex items-center gap-2 hover:text-cta transition-colors">
               <Mail className="w-4 h-4" />
-              <span>info@company.com</span>
+              <span>srichaitanya.industries@gmail.com</span>
             </a>
           </div>
           <div className="flex items-center gap-4 text-sm text-primary-foreground/80">
             <span>MSME Certified</span>
             <span className="w-1 h-1 rounded-full bg-cta" />
-            <span>Since 2002</span>
+            <span>Since 1992</span>
           </div>
         </div>
       </div>
@@ -59,10 +59,10 @@ const Header = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <a href="#home" className="flex items-center gap-3">
-              <img src={logo} alt="Company Logo" className="h-14 w-auto" />
+              <img src={logo} alt="Sri Chaitanya Industries Logo" className="h-14 w-auto" />
               <div className="hidden sm:block">
                 <span className="font-heading font-bold text-xl text-primary">
-                  CS Industries
+                  Sri Chaitanya Industries
                 </span>
                 <p className="text-xs text-muted-foreground">Precision Press Components</p>
               </div>
