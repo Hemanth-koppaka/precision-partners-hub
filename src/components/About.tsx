@@ -1,6 +1,5 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle2, ChevronDown, Eye, Target } from "lucide-react";
+import { motion } from "framer-motion";
+import { CheckCircle2, Eye, Target, Building2 } from "lucide-react";
 import ownerImage from "@/assets/owner.png";
 
 const highlights = [
@@ -13,186 +12,151 @@ const highlights = [
 ];
 
 const missionPoints = [
-  "Understand customer needs and deliver precision-engineered components that ensure performance, durability, and reliability",
-  "Provide consistent quality, timely delivery, and responsive service that builds long-term relationships",
-  "Combine advanced manufacturing capabilities with skilled professionals for customized, cost-effective solutions",
-  "Maintain transparent and ethical business practices that earn customer trust",
-  "Continuously improve processes, products, and service to exceed expectations",
+  "Deliver precision-engineered components with performance and reliability",
+  "Provide consistent quality and timely delivery",
+  "Combine advanced manufacturing with skilled professionals",
+  "Maintain transparent and ethical business practices",
+  "Continuously improve to exceed expectations",
 ];
 
 const About = () => {
-  const [isMissionOpen, setIsMissionOpen] = useState(false);
-  const [isHistoryOpen, setIsHistoryOpen] = useState(false);
-
   return (
-    <section id="about" className="py-20 lg:py-28 bg-background overflow-hidden">
+    <section id="about" className="py-16 lg:py-24 bg-background overflow-hidden">
       <div className="container mx-auto px-6">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
-          {/* Image Side */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="relative"
-          >
-            {/* Background Shape */}
-            <div className="absolute -top-8 -left-8 w-full h-full bg-cta/10 rounded-2xl" />
-            <div className="absolute -bottom-8 -right-8 w-full h-full border-2 border-cta/30 rounded-2xl" />
-            
-            {/* Image */}
-            <div className="relative rounded-2xl overflow-hidden shadow-xl">
-              <img
-                src={ownerImage}
-                alt="K. Nagabhushanam - Proprietor"
-                className="w-full h-auto object-cover"
-              />
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <span className="inline-block text-cta font-semibold text-sm uppercase tracking-wider mb-3">
+            About Us
+          </span>
+          <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-primary">
+            Sri Chaitanya Industries
+          </h2>
+        </motion.div>
+
+        {/* Owner Card - Compact Horizontal Layout */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.1 }}
+          className="bg-gradient-hero rounded-2xl p-6 md:p-8 mb-10 shadow-xl"
+        >
+          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+            {/* Owner Photo */}
+            <div className="relative flex-shrink-0">
+              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-cta/30 shadow-lg">
+                <img
+                  src={ownerImage}
+                  alt="K. Nagabhushanam - Proprietor"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="absolute -bottom-2 -right-2 bg-cta text-cta-foreground text-xs font-bold px-3 py-1 rounded-full shadow-md">
+                30+ Years
+              </div>
             </div>
 
-            {/* Experience Badge */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.3 }}
-              className="absolute -bottom-6 -right-6 lg:right-auto lg:-left-6 bg-primary text-primary-foreground rounded-xl p-6 shadow-xl"
-            >
-              <div className="text-4xl font-heading font-bold text-cta">30+</div>
-              <div className="text-sm">Years of<br />Excellence</div>
-            </motion.div>
+            {/* Owner Details */}
+            <div className="text-center md:text-left text-white flex-1">
+              <h3 className="font-heading text-2xl md:text-3xl font-bold mb-1">
+                K. Nagabhushanam
+              </h3>
+              <p className="text-cta font-semibold text-lg mb-3">Proprietor</p>
+              <p className="text-white/85 leading-relaxed max-w-xl">
+                Since 1992, leading Sri Chaitanya Industries as a customer-preferred 
+                manufacturing partner, consistently delivering reliable, high-quality 
+                industrial components from Balanagar, Hyderabad.
+              </p>
+              <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
+                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/90">Est. 1992</span>
+                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/90">Balanagar, Hyderabad</span>
+                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/90">MSME Certified</span>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Vision & Mission - Side by Side */}
+        <div className="grid md:grid-cols-2 gap-6 mb-10">
+          {/* Vision Card */}
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="bg-card border border-border rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-cta/10 rounded-xl flex items-center justify-center">
+                <Eye className="w-6 h-6 text-cta" />
+              </div>
+              <h3 className="font-heading font-bold text-xl text-foreground">Our Vision</h3>
+            </div>
+            <p className="text-muted-foreground leading-relaxed">
+              To become a customer-preferred manufacturing partner by consistently delivering 
+              reliable, high-quality industrial components that add value to our customers' 
+              products and businesses.
+            </p>
           </motion.div>
 
-          {/* Content Side */}
+          {/* Mission Card */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
+            transition={{ delay: 0.3 }}
+            className="bg-card border border-border rounded-2xl p-6 shadow-md hover:shadow-lg transition-shadow"
           >
-            <span className="inline-block text-cta font-semibold text-sm uppercase tracking-wider mb-4">
-              About Us
-            </span>
-            <h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-primary mb-6">
-              Sri Chaitanya Industries
-            </h2>
-            
-            {/* Key Facts */}
-            <div className="flex flex-wrap gap-4 mb-6 text-sm">
-              <span className="px-3 py-1 bg-secondary rounded-full text-foreground">Est. 1992</span>
-              <span className="px-3 py-1 bg-secondary rounded-full text-foreground">Balanagar, Hyderabad</span>
-              <span className="px-3 py-1 bg-secondary rounded-full text-foreground">K. Nagabhushanam, Proprietor</span>
-            </div>
-
-            <p className="text-muted-foreground text-lg leading-relaxed mb-6">
-              Since 1992, we have been a customer-preferred manufacturing partner, 
-              consistently delivering reliable, high-quality industrial components 
-              that add value to our customers' products and businesses.
-            </p>
-
-            {/* Vision - Always Visible */}
-            <div className="bg-gradient-hero text-white rounded-xl p-6 mb-4">
-              <div className="flex items-center gap-3 mb-3">
-                <Eye className="w-6 h-6 text-cta" />
-                <h3 className="font-heading font-bold text-lg">Our Vision</h3>
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-12 h-12 bg-cta/10 rounded-xl flex items-center justify-center">
+                <Target className="w-6 h-6 text-cta" />
               </div>
-              <p className="text-white/90 leading-relaxed">
-                To become a customer-preferred manufacturing partner by consistently delivering 
-                reliable, high-quality industrial components that add value to our customers' 
-                products and businesses.
-              </p>
+              <h3 className="font-heading font-bold text-xl text-foreground">Our Mission</h3>
             </div>
-
-            {/* Mission - Expandable */}
-            <div className="border border-border rounded-xl overflow-hidden mb-6">
-              <button
-                onClick={() => setIsMissionOpen(!isMissionOpen)}
-                className="w-full flex items-center justify-between p-4 bg-card hover:bg-secondary/50 transition-colors"
-              >
-                <div className="flex items-center gap-3">
-                  <Target className="w-5 h-5 text-cta" />
-                  <span className="font-heading font-semibold text-foreground">Our Mission</span>
-                </div>
-                <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isMissionOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence>
-                {isMissionOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-4 pt-0 space-y-3">
-                      {missionPoints.map((point, index) => (
-                        <div key={index} className="flex items-start gap-3">
-                          <CheckCircle2 className="w-4 h-4 text-cta flex-shrink-0 mt-1" />
-                          <span className="text-sm text-muted-foreground">{point}</span>
-                        </div>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Read More - Company History */}
-            <div className="border border-border rounded-xl overflow-hidden">
-              <button
-                onClick={() => setIsHistoryOpen(!isHistoryOpen)}
-                className="w-full flex items-center justify-between p-4 bg-card hover:bg-secondary/50 transition-colors"
-              >
-                <span className="font-heading font-semibold text-foreground">Read More About Us</span>
-                <ChevronDown className={`w-5 h-5 text-muted-foreground transition-transform ${isHistoryOpen ? 'rotate-180' : ''}`} />
-              </button>
-              <AnimatePresence>
-                {isHistoryOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="overflow-hidden"
-                  >
-                    <div className="p-4 pt-0 text-sm text-muted-foreground space-y-3">
-                      <p>
-                        Founded in 1992 by K. Nagabhushanam, Sri Chaitanya Industries has grown from 
-                        a small workshop in Balanagar, Hyderabad to become a trusted name in precision 
-                        industrial component manufacturing.
-                      </p>
-                      <p>
-                        Over three decades, we have built lasting partnerships with leading OEMs and 
-                        industrial clients across India, serving diverse sectors including power equipment, 
-                        refrigeration, filtration, and consumer durables.
-                      </p>
-                      <p>
-                        Our commitment to ethical practices, continuous improvement, and customer 
-                        satisfaction remains the cornerstone of our operations.
-                      </p>
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-
-            {/* Highlights */}
-            <div className="grid sm:grid-cols-2 gap-4 mt-8">
-              {highlights.map((item, index) => (
-                <motion.div
-                  key={item}
-                  initial={{ opacity: 0, x: 20 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.1 * index }}
-                  className="flex items-center gap-3"
-                >
-                  <CheckCircle2 className="w-5 h-5 text-cta flex-shrink-0" />
-                  <span className="text-foreground">{item}</span>
-                </motion.div>
+            <ul className="space-y-2">
+              {missionPoints.map((point, index) => (
+                <li key={index} className="flex items-start gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-cta flex-shrink-0 mt-0.5" />
+                  <span className="text-sm text-muted-foreground">{point}</span>
+                </li>
               ))}
-            </div>
+            </ul>
           </motion.div>
         </div>
+
+        {/* Highlights Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.4 }}
+          className="bg-secondary/50 rounded-2xl p-6 md:p-8"
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <Building2 className="w-6 h-6 text-cta" />
+            <h3 className="font-heading font-bold text-lg text-foreground">Why Choose Us</h3>
+          </div>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {highlights.map((item, index) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.1 * index }}
+                className="flex items-center gap-3 bg-background rounded-lg p-3"
+              >
+                <CheckCircle2 className="w-5 h-5 text-cta flex-shrink-0" />
+                <span className="text-foreground text-sm">{item}</span>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );
