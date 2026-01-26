@@ -28,6 +28,12 @@ import gussetPlate from "@/assets/products/gusset-plate.png";
 import motorBracket from "@/assets/products/motor-bracket.png";
 import hingeBracket from "@/assets/products/hinge-bracket.png";
 
+// Filter Caps image
+import filterCapsImage from "@/assets/products/filter-caps.png";
+
+// Clinching Clips image
+import clinchingClipsImage from "@/assets/products/clinching-clips.png";
+
 // Freezer Parts images
 import freezerMountingPlate1 from "@/assets/products/freezer-parts/mounting-plate-1.png";
 import freezerThreadedMount from "@/assets/products/freezer-parts/threaded-mount-plate.png";
@@ -115,11 +121,11 @@ const categories = [
     products: [
       {
         id: 8,
-        name: "Filter Base Assembly",
-        image: wrenchTool,
-        description: "Deep drawn filter base component",
-        useCases: ["Oil filters", "Air filters", "Industrial filtration"],
-        specifications: "Material: CRCA/SS, Seam: Welded, Pressure rating: Custom",
+        name: "Brass Filter Cap Set",
+        image: filterCapsImage,
+        description: "Premium brass/gold finish filter cap components including rings, discs, and washers",
+        useCases: ["Oil filters", "Air filters", "Industrial filtration", "Automotive filters"],
+        specifications: "Material: Brass/Bronze, Finish: Polished gold, Includes: End caps, retaining rings, center disc",
       },
       {
         id: 9,
@@ -175,11 +181,11 @@ const categories = [
     products: [
       {
         id: 14,
-        name: "Spring Clip Component",
-        image: blackBracket,
-        description: "Stainless steel spring clip component",
-        useCases: ["Quick release", "Panel retention", "Assembly clips"],
-        specifications: "Material: Spring steel/SS, Tension: Customizable, Heat treated",
+        name: "Clinching Clip Strip",
+        image: clinchingClipsImage,
+        description: "High-precision clinching clip strips for automated assembly, made from galvanized steel with sharp prongs for secure fastening",
+        useCases: ["Automated assembly lines", "Sheet metal joining", "Industrial fastening", "Panel clinching"],
+        specifications: "Material: Galvanized spring steel, Strip form: Continuous, Prong design: Precision formed, Heat treated for durability",
       },
       {
         id: 15,
@@ -193,7 +199,7 @@ const categories = [
         id: 16,
         name: "Panel Clinch Clip",
         image: uBracket,
-        description: "Panel-to-panel clinching clip",
+        description: "Panel-to-panel clinching clip for sheet metal assembly",
         useCases: ["Sheet metal assembly", "Panel joining", "Quick assembly"],
         specifications: "Material: Galvanized steel, Thickness range: 0.5-1.5mm, No tools required",
       },
