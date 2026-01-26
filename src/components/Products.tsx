@@ -28,6 +28,17 @@ import gussetPlate from "@/assets/products/gusset-plate.png";
 import motorBracket from "@/assets/products/motor-bracket.png";
 import hingeBracket from "@/assets/products/hinge-bracket.png";
 
+// Freezer Parts images
+import freezerMountingPlate1 from "@/assets/products/freezer-parts/mounting-plate-1.png";
+import freezerThreadedMount from "@/assets/products/freezer-parts/threaded-mount-plate.png";
+import freezerBlackUBracket from "@/assets/products/freezer-parts/black-u-bracket.png";
+import freezerZMountBracket from "@/assets/products/freezer-parts/z-mount-bracket.png";
+import freezerGussetPlate1 from "@/assets/products/freezer-parts/gusset-plate-1.png";
+import freezerSlottedHinge from "@/assets/products/freezer-parts/slotted-hinge-bracket.png";
+import freezerGussetPlate2 from "@/assets/products/freezer-parts/gusset-plate-2.png";
+import freezerCurvedLBracket from "@/assets/products/freezer-parts/curved-l-bracket.png";
+import freezerMountingPlate2 from "@/assets/products/freezer-parts/mounting-plate-2.png";
+
 // Category definitions with products
 const categories = [
   {
@@ -253,6 +264,84 @@ const categories = [
         description: "Powder-coated steel box bracket",
         useCases: ["Heavy load bearing", "Industrial fixtures", "Support structures"],
         specifications: "Material: MS Steel, Finish: Powder coated, Weld quality: Grade A",
+      },
+    ],
+  },
+  {
+    id: 8,
+    name: "Freezer Parts",
+    products: [
+      {
+        id: 24,
+        name: "Freezer Mounting Plate",
+        image: freezerMountingPlate1,
+        description: "Heavy-duty galvanized mounting plate with countersunk holes",
+        useCases: ["Freezer door mounting", "Cold storage fixtures", "Refrigeration units"],
+        specifications: "Material: Galvanized steel, Thickness: 3mm, Temperature rating: -40°C to +60°C",
+      },
+      {
+        id: 25,
+        name: "Threaded Mount Plate",
+        image: freezerThreadedMount,
+        description: "Steel plate with welded threaded inserts for quick mounting",
+        useCases: ["Adjustable freezer fixtures", "Cold room panels", "Refrigerator hardware"],
+        specifications: "Material: Galvanized steel, Inserts: M6-M10, Corrosion resistant",
+      },
+      {
+        id: 26,
+        name: "Freezer U-Bracket",
+        image: freezerBlackUBracket,
+        description: "Black powder-coated U-bracket for freezer assemblies",
+        useCases: ["Freezer door support", "Cold storage shelving", "Equipment mounting"],
+        specifications: "Material: MS Steel, Finish: Powder coated black, Load capacity: 25kg",
+      },
+      {
+        id: 27,
+        name: "Z-Mount Bracket",
+        image: freezerZMountBracket,
+        description: "Galvanized Z-mount bracket for freezer door systems",
+        useCases: ["Door alignment", "Panel mounting", "Cold room construction"],
+        specifications: "Material: Galvanized steel, Thickness: 2-3mm, Zinc plated",
+      },
+      {
+        id: 28,
+        name: "Freezer Gusset Plate",
+        image: freezerGussetPlate1,
+        description: "Triangular gusset plate for freezer structural reinforcement",
+        useCases: ["Corner bracing", "Frame connections", "Structural support"],
+        specifications: "Material: Galvanized steel, Thickness: 2-4mm, Custom hole patterns",
+      },
+      {
+        id: 29,
+        name: "Slotted Hinge Bracket",
+        image: freezerSlottedHinge,
+        description: "Slotted hinge support bracket with pin for freezer doors",
+        useCases: ["Freezer door assemblies", "Walk-in coolers", "Cold storage doors"],
+        specifications: "Material: Galvanized steel, Pin: Hardened steel, Adjustable slots",
+      },
+      {
+        id: 30,
+        name: "Gusset Support Plate",
+        image: freezerGussetPlate2,
+        description: "Precision gusset plate for freezer frame reinforcement",
+        useCases: ["Structural reinforcement", "Frame connections", "Load distribution"],
+        specifications: "Material: Galvanized steel, Thickness: 2-3mm, Multiple hole patterns",
+      },
+      {
+        id: 31,
+        name: "Curved L-Bracket",
+        image: freezerCurvedLBracket,
+        description: "Curved L-shaped bracket for freezer hinge applications",
+        useCases: ["Hinge assemblies", "Door hardware", "Pivot points"],
+        specifications: "Material: Galvanized steel, Curved design, 4 mounting holes",
+      },
+      {
+        id: 32,
+        name: "Multi-Slot Mounting Plate",
+        image: freezerMountingPlate2,
+        description: "Precision mounting plate with multiple slot and hole patterns",
+        useCases: ["Panel installation", "Equipment bases", "Freezer hardware"],
+        specifications: "Material: Galvanized steel, Thickness: 2-3mm, Multiple cutouts",
       },
     ],
   },
