@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ChevronDown, ChevronUp, X, RotateCcw, Eye } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp, X, Move, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogHeader,
-  DialogTitle,
 } from "@/components/ui/dialog";
 
 import casterWheel from "@/assets/products/caster-wheel.png";
@@ -45,310 +43,86 @@ import freezerGussetPlate2 from "@/assets/products/freezer-parts/gusset-plate-2.
 import freezerCurvedLBracket from "@/assets/products/freezer-parts/curved-l-bracket.png";
 import freezerMountingPlate2 from "@/assets/products/freezer-parts/mounting-plate-2.png";
 
-// Category definitions with products
+// Category definitions with products (visual-first, no specs)
 const categories = [
   {
     id: 1,
     name: "Freezer Hinges",
     products: [
-      {
-        id: 1,
-        name: "Hinge Support Bracket",
-        image: hingeBracket,
-        description: "Slotted hinge support bracket with pin",
-        useCases: ["Freezer door assemblies", "Cold storage", "Refrigeration units"],
-        specifications: "Material: Galvanized steel, Pin: Hardened steel, Temperature rating: -40°C to +60°C",
-      },
-      {
-        id: 2,
-        name: "Heavy Duty Freezer Hinge",
-        image: zBracket,
-        description: "Industrial grade freezer door hinge assembly",
-        useCases: ["Walk-in freezers", "Industrial cold rooms", "Commercial refrigerators"],
-        specifications: "Material: Stainless Steel 304, Load capacity: 50kg per hinge, Corrosion resistant",
-      },
-      {
-        id: 3,
-        name: "Spring-Loaded Hinge",
-        image: lBracket,
-        description: "Self-closing spring hinge for freezer doors",
-        useCases: ["Auto-close applications", "Energy-efficient doors", "Commercial kitchens"],
-        specifications: "Material: Galvanized steel, Spring force: Adjustable, Cycles: 100,000+",
-      },
+      { id: 1, name: "Hinge Support Bracket", image: hingeBracket },
+      { id: 2, name: "Heavy Duty Freezer Hinge", image: zBracket },
+      { id: 3, name: "Spring-Loaded Hinge", image: lBracket },
     ],
   },
   {
     id: 2,
     name: "Press Components",
     products: [
-      {
-        id: 4,
-        name: "Mounting Plate",
-        image: mountingPlate,
-        description: "Precision-cut galvanized mounting plate",
-        useCases: ["Motor mounting", "Panel installation", "Equipment bases"],
-        specifications: "Material: Cold-rolled steel, Surface: Galvanized/Powder coated",
-      },
-      {
-        id: 5,
-        name: "Base Mounting Plate",
-        image: basePlate,
-        description: "Precision base plate with countersunk holes",
-        useCases: ["Equipment mounting", "Floor fixtures", "Structural bases"],
-        specifications: "Material: CRCA Steel, Thickness: 4-6mm, Surface: Galvanized",
-      },
-      {
-        id: 6,
-        name: "Threaded Insert Plate",
-        image: threadedPlate,
-        description: "Steel plate with welded threaded inserts",
-        useCases: ["Quick-mount systems", "Adjustable fixtures", "Panel installation"],
-        specifications: "Material: Steel, Inserts: M6-M12, Finish: Zinc plated",
-      },
-      {
-        id: 7,
-        name: "Gusset Plate",
-        image: gussetPlate,
-        description: "Triangular gusset reinforcement plate",
-        useCases: ["Structural reinforcement", "Corner bracing", "Frame connections"],
-        specifications: "Material: MS Steel, Thickness: 2-5mm, Various hole patterns",
-      },
+      { id: 4, name: "Mounting Plate", image: mountingPlate },
+      { id: 5, name: "Base Mounting Plate", image: basePlate },
+      { id: 6, name: "Threaded Insert Plate", image: threadedPlate },
+      { id: 7, name: "Gusset Plate", image: gussetPlate },
     ],
   },
   {
     id: 3,
     name: "Filter Caps",
     products: [
-      {
-        id: 8,
-        name: "Brass Filter Cap Set",
-        image: filterCapsImage,
-        description: "Premium brass/gold finish filter cap components including rings, discs, and washers",
-        useCases: ["Oil filters", "Air filters", "Industrial filtration", "Automotive filters"],
-        specifications: "Material: Brass/Bronze, Finish: Polished gold, Includes: End caps, retaining rings, center disc",
-      },
-      {
-        id: 9,
-        name: "Filter End Cap",
-        image: whiteTool,
-        description: "Precision filter end cap with seal groove",
-        useCases: ["Hydraulic filters", "Fuel filters", "Water filtration"],
-        specifications: "Material: Steel/Aluminum, Seal type: O-ring, Pressure: Up to 10 bar",
-      },
-      {
-        id: 10,
-        name: "Threaded Filter Cap",
-        image: whiteWrench,
-        description: "Threaded cap for filter assemblies",
-        useCases: ["Screw-on filters", "Replaceable elements", "Cartridge filters"],
-        specifications: "Material: Steel, Thread: Standard metric/BSP, Finish: Zinc plated",
-      },
+      { id: 8, name: "Brass Filter Cap Set", image: filterCapsImage },
+      { id: 9, name: "Filter End Cap", image: whiteTool },
+      { id: 10, name: "Threaded Filter Cap", image: whiteWrench },
     ],
   },
   {
     id: 4,
     name: "Deep Drawn Press Components",
     products: [
-      {
-        id: 11,
-        name: "Deep Drawn Cup",
-        image: casterWheel,
-        description: "Precision deep drawn steel cup component",
-        useCases: ["Filter housings", "Cap components", "Container parts"],
-        specifications: "Material: CRCA Steel, Depth ratio: Up to 2:1, Surface: Bright finish",
-      },
-      {
-        id: 12,
-        name: "Cylindrical Housing",
-        image: fanPanel,
-        description: "Deep drawn cylindrical housing component",
-        useCases: ["Motor housings", "Pump casings", "Electronic enclosures"],
-        specifications: "Material: Steel/SS, Wall thickness: 0.5-2mm, Height: Up to 150mm",
-      },
-      {
-        id: 13,
-        name: "Conical Component",
-        image: ventedPlate,
-        description: "Deep drawn conical shape component",
-        useCases: ["Funnels", "Nozzle housings", "Transition pieces"],
-        specifications: "Material: CRCA/SS, Angle: 15-60°, Seamless construction",
-      },
+      { id: 11, name: "Deep Drawn Cup", image: casterWheel },
+      { id: 12, name: "Cylindrical Housing", image: fanPanel },
+      { id: 13, name: "Conical Component", image: ventedPlate },
     ],
   },
   {
     id: 5,
     name: "Clinching Clips",
     products: [
-      {
-        id: 14,
-        name: "Clinching Clip Strip",
-        image: clinchingClipsImage,
-        description: "High-precision clinching clip strips for automated assembly, made from galvanized steel with sharp prongs for secure fastening",
-        useCases: ["Automated assembly lines", "Sheet metal joining", "Industrial fastening", "Panel clinching"],
-        specifications: "Material: Galvanized spring steel, Strip form: Continuous, Prong design: Precision formed, Heat treated for durability",
-      },
-      {
-        id: 15,
-        name: "Retaining Clip",
-        image: steelBracket,
-        description: "Metal retaining clip for secure fastening",
-        useCases: ["Cable management", "Pipe clamps", "Component retention"],
-        specifications: "Material: Spring steel, Finish: Phosphate/Zinc, Reusable design",
-      },
-      {
-        id: 16,
-        name: "Panel Clinch Clip",
-        image: uBracket,
-        description: "Panel-to-panel clinching clip for sheet metal assembly",
-        useCases: ["Sheet metal assembly", "Panel joining", "Quick assembly"],
-        specifications: "Material: Galvanized steel, Thickness range: 0.5-1.5mm, No tools required",
-      },
+      { id: 14, name: "Clinching Clip Strip", image: clinchingClipsImage },
+      { id: 15, name: "Retaining Clip", image: steelBracket },
+      { id: 16, name: "Panel Clinch Clip", image: uBracket },
     ],
   },
   {
     id: 6,
     name: "Caster Wheels",
     products: [
-      {
-        id: 17,
-        name: "Caster Wheel Assembly",
-        image: casterWheel,
-        description: "Heavy-duty swivel caster with precision bearings",
-        useCases: ["Material handling equipment", "Industrial trolleys", "Storage systems"],
-        specifications: "Load capacity: 200kg, Wheel diameter: 100mm, Swivel lock available",
-      },
-      {
-        id: 18,
-        name: "Fixed Caster Bracket",
-        image: motorBracket,
-        description: "Fixed caster mounting bracket assembly",
-        useCases: ["Heavy equipment", "Static loads", "Industrial carts"],
-        specifications: "Material: Steel, Load: Up to 500kg, Mounting: Plate/Stem options",
-      },
-      {
-        id: 19,
-        name: "Brake Caster Unit",
-        image: foldedBracket,
-        description: "Caster with integrated brake mechanism",
-        useCases: ["Mobile workstations", "Safety applications", "Precision positioning"],
-        specifications: "Material: Steel/Nylon, Brake type: Foot-operated, Wheel: PU/Rubber",
-      },
+      { id: 17, name: "Caster Wheel Assembly", image: casterWheel },
+      { id: 18, name: "Fixed Caster Bracket", image: motorBracket },
+      { id: 19, name: "Brake Caster Unit", image: foldedBracket },
     ],
   },
   {
     id: 7,
     name: "Sheet Metal Components",
     products: [
-      {
-        id: 20,
-        name: "Custom L-Bracket",
-        image: lBracket,
-        description: "Galvanized steel L-bracket with mounting holes",
-        useCases: ["Structural support", "Cabinet mounting", "Equipment installation"],
-        specifications: "Material: Galvanized steel, Thickness: 2-4mm, Custom sizes available",
-      },
-      {
-        id: 21,
-        name: "U-Channel Bracket",
-        image: uBracket,
-        description: "Powder-coated steel U-channel bracket",
-        useCases: ["Heavy load bearing", "Furniture hardware", "Industrial fixtures"],
-        specifications: "Material: MS Steel, Finish: Powder coated, Weld quality: Grade A",
-      },
-      {
-        id: 22,
-        name: "Z-Bracket Assembly",
-        image: zBracket,
-        description: "Heavy-duty Z-shaped mounting bracket",
-        useCases: ["Wall mounting", "Equipment support", "Cantilever applications"],
-        specifications: "Material: Galvanized steel, Thickness: 3-6mm, Custom bends",
-      },
-      {
-        id: 23,
-        name: "Box Bracket",
-        image: blackBracket,
-        description: "Powder-coated steel box bracket",
-        useCases: ["Heavy load bearing", "Industrial fixtures", "Support structures"],
-        specifications: "Material: MS Steel, Finish: Powder coated, Weld quality: Grade A",
-      },
+      { id: 20, name: "Custom L-Bracket", image: lBracket },
+      { id: 21, name: "U-Channel Bracket", image: uBracket },
+      { id: 22, name: "Z-Bracket Assembly", image: zBracket },
+      { id: 23, name: "Box Bracket", image: blackBracket },
     ],
   },
   {
     id: 8,
     name: "Freezer Parts",
     products: [
-      {
-        id: 24,
-        name: "Freezer Mounting Plate",
-        image: freezerMountingPlate1,
-        description: "Heavy-duty galvanized mounting plate with countersunk holes",
-        useCases: ["Freezer door mounting", "Cold storage fixtures", "Refrigeration units"],
-        specifications: "Material: Galvanized steel, Thickness: 3mm, Temperature rating: -40°C to +60°C",
-      },
-      {
-        id: 25,
-        name: "Threaded Mount Plate",
-        image: freezerThreadedMount,
-        description: "Steel plate with welded threaded inserts for quick mounting",
-        useCases: ["Adjustable freezer fixtures", "Cold room panels", "Refrigerator hardware"],
-        specifications: "Material: Galvanized steel, Inserts: M6-M10, Corrosion resistant",
-      },
-      {
-        id: 26,
-        name: "Freezer U-Bracket",
-        image: freezerBlackUBracket,
-        description: "Black powder-coated U-bracket for freezer assemblies",
-        useCases: ["Freezer door support", "Cold storage shelving", "Equipment mounting"],
-        specifications: "Material: MS Steel, Finish: Powder coated black, Load capacity: 25kg",
-      },
-      {
-        id: 27,
-        name: "Z-Mount Bracket",
-        image: freezerZMountBracket,
-        description: "Galvanized Z-mount bracket for freezer door systems",
-        useCases: ["Door alignment", "Panel mounting", "Cold room construction"],
-        specifications: "Material: Galvanized steel, Thickness: 2-3mm, Zinc plated",
-      },
-      {
-        id: 28,
-        name: "Freezer Gusset Plate",
-        image: freezerGussetPlate1,
-        description: "Triangular gusset plate for freezer structural reinforcement",
-        useCases: ["Corner bracing", "Frame connections", "Structural support"],
-        specifications: "Material: Galvanized steel, Thickness: 2-4mm, Custom hole patterns",
-      },
-      {
-        id: 29,
-        name: "Slotted Hinge Bracket",
-        image: freezerSlottedHinge,
-        description: "Slotted hinge support bracket with pin for freezer doors",
-        useCases: ["Freezer door assemblies", "Walk-in coolers", "Cold storage doors"],
-        specifications: "Material: Galvanized steel, Pin: Hardened steel, Adjustable slots",
-      },
-      {
-        id: 30,
-        name: "Gusset Support Plate",
-        image: freezerGussetPlate2,
-        description: "Precision gusset plate for freezer frame reinforcement",
-        useCases: ["Structural reinforcement", "Frame connections", "Load distribution"],
-        specifications: "Material: Galvanized steel, Thickness: 2-3mm, Multiple hole patterns",
-      },
-      {
-        id: 31,
-        name: "Curved L-Bracket",
-        image: freezerCurvedLBracket,
-        description: "Curved L-shaped bracket for freezer hinge applications",
-        useCases: ["Hinge assemblies", "Door hardware", "Pivot points"],
-        specifications: "Material: Galvanized steel, Curved design, 4 mounting holes",
-      },
-      {
-        id: 32,
-        name: "Multi-Slot Mounting Plate",
-        image: freezerMountingPlate2,
-        description: "Precision mounting plate with multiple slot and hole patterns",
-        useCases: ["Panel installation", "Equipment bases", "Freezer hardware"],
-        specifications: "Material: Galvanized steel, Thickness: 2-3mm, Multiple cutouts",
-      },
+      { id: 24, name: "Freezer Mounting Plate", image: freezerMountingPlate1 },
+      { id: 25, name: "Threaded Mount Plate", image: freezerThreadedMount },
+      { id: 26, name: "Freezer U-Bracket", image: freezerBlackUBracket },
+      { id: 27, name: "Z-Mount Bracket", image: freezerZMountBracket },
+      { id: 28, name: "Freezer Gusset Plate", image: freezerGussetPlate1 },
+      { id: 29, name: "Slotted Hinge Bracket", image: freezerSlottedHinge },
+      { id: 30, name: "Gusset Support Plate", image: freezerGussetPlate2 },
+      { id: 31, name: "Curved L-Bracket", image: freezerCurvedLBracket },
+      { id: 32, name: "Multi-Slot Mounting Plate", image: freezerMountingPlate2 },
     ],
   },
 ];
@@ -357,24 +131,13 @@ interface Product {
   id: number;
   name: string;
   image: string;
-  description: string;
-  useCases: string[];
-  specifications: string;
-}
-
-interface Category {
-  id: number;
-  name: string;
-  products: Product[];
 }
 
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-    },
+    transition: { staggerChildren: 0.08 },
   },
 };
 
@@ -388,7 +151,15 @@ const Products = () => {
   const [expandedCategories, setExpandedCategories] = useState<number[]>(
     categories.map((c) => c.id)
   );
-  const [rotation, setRotation] = useState(0);
+  const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const dragRef = useRef<{ startX: number; startY: number; startRotX: number; startRotY: number }>({
+    startX: 0,
+    startY: 0,
+    startRotX: 0,
+    startRotY: 0,
+  });
+  const imageContainerRef = useRef<HTMLDivElement>(null);
 
   const toggleCategory = (categoryId: number) => {
     setExpandedCategories((prev) =>
@@ -398,8 +169,42 @@ const Products = () => {
     );
   };
 
-  const handleRotate = () => {
-    setRotation((prev) => prev + 90);
+  // Reset rotation when product changes
+  useEffect(() => {
+    if (selectedProduct) {
+      setRotation({ x: 0, y: 0 });
+    }
+  }, [selectedProduct]);
+
+  // Handle mouse/touch drag for 360 rotation
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true);
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    dragRef.current = {
+      startX: clientX,
+      startY: clientY,
+      startRotX: rotation.x,
+      startRotY: rotation.y,
+    };
+  };
+
+  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging) return;
+    const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const clientY = 'touches' in e ? e.touches[0].clientY : e.clientY;
+    
+    const deltaX = clientX - dragRef.current.startX;
+    const deltaY = clientY - dragRef.current.startY;
+    
+    setRotation({
+      x: dragRef.current.startRotX + deltaY * 0.5,
+      y: dragRef.current.startRotY + deltaX * 0.5,
+    });
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
   };
 
   return (
@@ -420,8 +225,8 @@ const Products = () => {
             Product Categories
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
-            Explore our comprehensive range of industrial components organized by category.
-            Click on any product to view detailed specifications.
+            Explore our comprehensive range of industrial components. 
+            Click any product to inspect it interactively.
           </p>
         </motion.div>
 
@@ -461,7 +266,7 @@ const Products = () => {
                 </div>
               </button>
 
-              {/* Products Grid */}
+              {/* Products Grid - Clean Image Cards */}
               <AnimatePresence>
                 {expandedCategories.includes(category.id) && (
                   <motion.div
@@ -476,7 +281,7 @@ const Products = () => {
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"
-                        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-5"
+                        className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-5"
                       >
                         {category.products.map((product) => (
                           <motion.div
@@ -485,50 +290,32 @@ const Products = () => {
                             onClick={() => setSelectedProduct(product)}
                             className="group bg-background rounded-lg overflow-hidden border border-border hover:border-cta/50 hover:shadow-lg transition-all duration-300 cursor-pointer"
                           >
-                            {/* Product Image */}
-                            <div className="relative aspect-square bg-gradient-to-br from-steel-light to-white p-4 overflow-hidden">
+                            {/* Product Image Only */}
+                            <div className="relative aspect-square bg-gradient-to-br from-steel-light to-white p-3 overflow-hidden">
                               <img
                                 src={product.image}
                                 alt={product.name}
                                 loading="lazy"
                                 className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-110"
                               />
-                              {/* Quick View Overlay */}
-                              <div className="absolute inset-0 bg-primary/70 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
-                                <div className="flex items-center gap-2 text-white font-medium">
-                                  <Eye className="w-5 h-5" />
-                                  Quick View
+                              {/* Hover Overlay */}
+                              <div className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                <div className="flex items-center gap-2 text-white font-medium text-sm">
+                                  <Move className="w-4 h-4" />
+                                  View 360°
                                 </div>
                               </div>
                             </div>
 
-                            {/* Product Info */}
-                            <div className="p-4">
-                              <h4 className="font-heading font-semibold text-foreground text-sm md:text-base line-clamp-2 min-h-[2.5rem]">
+                            {/* Product Name Only */}
+                            <div className="p-3 text-center">
+                              <h4 className="font-heading font-semibold text-foreground text-xs md:text-sm line-clamp-2">
                                 {product.name}
                               </h4>
-                              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                                {product.description}
-                              </p>
                             </div>
                           </motion.div>
                         ))}
                       </motion.div>
-
-                      {/* View More Button */}
-                      <div className="mt-6 text-center">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="group"
-                          onClick={() => {
-                            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                          }}
-                        >
-                          Request Catalogue for {category.name}
-                          <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" />
-                        </Button>
-                      </div>
                     </div>
                   </motion.div>
                 )}
@@ -559,87 +346,68 @@ const Products = () => {
         </motion.div>
       </div>
 
-      {/* Product Detail Modal */}
+      {/* Product 360° Viewer Modal - Visual First */}
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
-        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl p-0 overflow-hidden bg-background">
           {selectedProduct && (
-            <>
-              <DialogHeader>
-                <DialogTitle className="font-heading text-2xl text-primary">
-                  {selectedProduct.name}
-                </DialogTitle>
-              </DialogHeader>
-
-              <div className="grid md:grid-cols-2 gap-6 mt-4">
-                {/* Product Image with 360 simulation */}
-                <div className="relative bg-gradient-to-br from-steel-light to-white rounded-xl p-6 flex items-center justify-center">
+            <div className="flex flex-col">
+              {/* 360° Image Viewer */}
+              <div
+                ref={imageContainerRef}
+                onMouseDown={handleDragStart}
+                onMouseMove={handleDragMove}
+                onMouseUp={handleDragEnd}
+                onMouseLeave={handleDragEnd}
+                onTouchStart={handleDragStart}
+                onTouchMove={handleDragMove}
+                onTouchEnd={handleDragEnd}
+                className="relative bg-gradient-to-br from-steel-light to-white cursor-grab active:cursor-grabbing select-none"
+                style={{ touchAction: 'none' }}
+              >
+                <div className="aspect-square p-8 flex items-center justify-center">
                   <motion.img
                     src={selectedProduct.image}
                     alt={selectedProduct.name}
-                    className="w-full max-h-64 object-contain"
-                    style={{ rotate: rotation }}
-                    animate={{ rotate: rotation }}
-                    transition={{ type: "spring", stiffness: 100 }}
+                    className="max-w-full max-h-full object-contain pointer-events-none"
+                    style={{
+                      transform: `perspective(1000px) rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+                    }}
+                    animate={{
+                      rotateX: rotation.x,
+                      rotateY: rotation.y,
+                    }}
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
                   />
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="absolute bottom-4 right-4"
-                    onClick={handleRotate}
-                  >
-                    <RotateCcw className="w-4 h-4 mr-2" />
-                    Rotate
-                  </Button>
                 </div>
 
-                {/* Product Details */}
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-muted-foreground mt-2">
-                      {selectedProduct.description}
-                    </p>
-                  </div>
-
-                  <div>
-                    <h4 className="font-heading font-semibold text-foreground mb-2">
-                      Use Cases
-                    </h4>
-                    <ul className="space-y-1">
-                      {selectedProduct.useCases.map((useCase, index) => (
-                        <li
-                          key={index}
-                          className="text-sm text-muted-foreground flex items-center gap-2"
-                        >
-                          <span className="w-1.5 h-1.5 rounded-full bg-cta" />
-                          {useCase}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <h4 className="font-heading font-semibold text-foreground mb-2">
-                      Specifications
-                    </h4>
-                    <p className="text-sm text-muted-foreground">
-                      {selectedProduct.specifications}
-                    </p>
-                  </div>
-
-                  <Button
-                    variant="hero"
-                    size="lg"
-                    className="w-full mt-4"
-                    onClick={() => {
-                      setSelectedProduct(null);
-                      document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-                    }}
-                  >
-                    Request a Quote
-                  </Button>
+                {/* Drag Hint */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 bg-primary/80 text-white text-sm px-4 py-2 rounded-full">
+                  <Move className="w-4 h-4" />
+                  Drag to rotate
                 </div>
               </div>
-            </>
+
+              {/* Product Name & CTA */}
+              <div className="p-6 text-center space-y-4">
+                <h3 className="font-heading text-xl md:text-2xl font-bold text-foreground">
+                  {selectedProduct.name}
+                </h3>
+
+                <Button
+                  variant="cta"
+                  size="lg"
+                  className="w-full max-w-sm mx-auto group"
+                  onClick={() => {
+                    setSelectedProduct(null);
+                    document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  <MessageSquare className="w-5 h-5 mr-2" />
+                  Request a Quote
+                  <ArrowRight className="w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+                </Button>
+              </div>
+            </div>
           )}
         </DialogContent>
       </Dialog>

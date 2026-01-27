@@ -38,44 +38,43 @@ const About = () => {
           </h2>
         </motion.div>
 
-        {/* Owner Card - Compact Horizontal Layout */}
+        {/* Owner Card - Large Photo, Executive Layout */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="bg-gradient-hero rounded-2xl p-6 md:p-8 mb-10 shadow-xl"
+          className="bg-gradient-hero rounded-2xl p-8 md:p-12 mb-10 shadow-xl"
         >
-          <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-            {/* Owner Photo */}
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+            {/* Large Owner Photo - Dominant Visual */}
             <div className="relative flex-shrink-0">
-              <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-cta/30 shadow-lg">
+              <div className="w-48 h-48 md:w-64 md:h-64 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-4 border-cta/30 shadow-2xl">
                 <img
                   src={ownerImage}
                   alt="K. Nagabhushanam - Proprietor"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -bottom-2 -right-2 bg-cta text-cta-foreground text-xs font-bold px-3 py-1 rounded-full shadow-md">
+              <div className="absolute -bottom-3 -right-3 bg-cta text-cta-foreground text-sm font-bold px-4 py-2 rounded-xl shadow-lg">
                 30+ Years
               </div>
             </div>
 
-            {/* Owner Details */}
-            <div className="text-center md:text-left text-white flex-1">
-              <h3 className="font-heading text-2xl md:text-3xl font-bold mb-1">
+            {/* Owner Details - Compact, Executive Style */}
+            <div className="text-center lg:text-left text-white flex-1">
+              <h3 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
                 K. Nagabhushanam
               </h3>
-              <p className="text-cta font-semibold text-lg mb-3">Proprietor</p>
-              <p className="text-white/85 leading-relaxed max-w-xl">
-                Since 1992, leading Sri Chaitanya Industries as a customer-preferred 
-                manufacturing partner, consistently delivering reliable, high-quality 
-                industrial components from Balanagar, Hyderabad.
+              <p className="text-cta font-semibold text-xl md:text-2xl mb-4">Proprietor</p>
+              <p className="text-white/90 leading-relaxed text-lg max-w-lg">
+                Leading Sri Chaitanya Industries since 1992 with a commitment to 
+                precision engineering and customer satisfaction.
               </p>
-              <div className="flex flex-wrap gap-3 mt-4 justify-center md:justify-start">
-                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/90">Est. 1992</span>
-                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/90">Balanagar, Hyderabad</span>
-                <span className="px-3 py-1 bg-white/10 rounded-full text-sm text-white/90">MSME Certified</span>
+              <div className="flex flex-wrap gap-3 mt-6 justify-center lg:justify-start">
+                <span className="px-4 py-2 bg-white/15 rounded-full text-sm font-medium text-white">Est. 1992</span>
+                <span className="px-4 py-2 bg-white/15 rounded-full text-sm font-medium text-white">Hyderabad</span>
+                <span className="px-4 py-2 bg-white/15 rounded-full text-sm font-medium text-white">MSME Certified</span>
               </div>
             </div>
           </div>
