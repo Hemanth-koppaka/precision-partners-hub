@@ -1,40 +1,33 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ChevronDown, ChevronUp, X, Move, MessageSquare } from "lucide-react";
+import { ArrowRight, ChevronDown, ChevronUp, Move, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
 } from "@/components/ui/dialog";
 
+// Category-specific images
+import freezerHingeAssembly from "@/assets/products/freezer-hinge-assembly.png";
+import filterCapsImage from "@/assets/products/filter-caps.png";
+import clinchingClipsImage from "@/assets/products/clinching-clips.png";
 import casterWheel from "@/assets/products/caster-wheel.png";
-import lBracket from "@/assets/products/l-bracket.png";
+import electricalBox from "@/assets/products/electrical-box.png";
+import deepDrawnComponents from "@/assets/products/deep-drawn-components.png";
+import copperShell from "@/assets/products/copper-shell.png";
+
+// Press Components images (existing)
 import mountingPlate from "@/assets/products/mounting-plate.png";
-import ventedPlate from "@/assets/products/vented-plate.png";
-import wrenchTool from "@/assets/products/wrench-tool.png";
-import blackBracket from "@/assets/products/black-bracket.png";
-import whiteTool from "@/assets/products/white-tool.png";
-import steelBracket from "@/assets/products/steel-bracket.png";
 import basePlate from "@/assets/products/base-plate.png";
 import threadedPlate from "@/assets/products/threaded-plate.png";
-import uBracket from "@/assets/products/u-bracket.png";
-import whiteWrench from "@/assets/products/white-wrench.png";
-import foldedBracket from "@/assets/products/folded-bracket.png";
-import zBracket from "@/assets/products/z-bracket.png";
-import fanPanel from "@/assets/products/fan-panel.png";
 import gussetPlate from "@/assets/products/gusset-plate.png";
-import motorBracket from "@/assets/products/motor-bracket.png";
-import hingeBracket from "@/assets/products/hinge-bracket.png";
-
-// Filter Caps image
-import filterCapsImage from "@/assets/products/filter-caps.png";
-
-// Clinching Clips image
-import clinchingClipsImage from "@/assets/products/clinching-clips.png";
+import lBracket from "@/assets/products/l-bracket.png";
+import uBracket from "@/assets/products/u-bracket.png";
+import zBracket from "@/assets/products/z-bracket.png";
+import blackBracket from "@/assets/products/black-bracket.png";
 
 // Freezer Parts images
 import freezerMountingPlate1 from "@/assets/products/freezer-parts/mounting-plate-1.png";
-import freezerThreadedMount from "@/assets/products/freezer-parts/threaded-mount-plate.png";
 import freezerBlackUBracket from "@/assets/products/freezer-parts/black-u-bracket.png";
 import freezerZMountBracket from "@/assets/products/freezer-parts/z-mount-bracket.png";
 import freezerGussetPlate1 from "@/assets/products/freezer-parts/gusset-plate-1.png";
@@ -43,86 +36,77 @@ import freezerGussetPlate2 from "@/assets/products/freezer-parts/gusset-plate-2.
 import freezerCurvedLBracket from "@/assets/products/freezer-parts/curved-l-bracket.png";
 import freezerMountingPlate2 from "@/assets/products/freezer-parts/mounting-plate-2.png";
 
-// Category definitions with products (visual-first, no specs)
+// Category definitions with exact products per folder
 const categories = [
   {
     id: 1,
     name: "Freezer Hinges",
     products: [
-      { id: 1, name: "Hinge Support Bracket", image: hingeBracket },
-      { id: 2, name: "Heavy Duty Freezer Hinge", image: zBracket },
-      { id: 3, name: "Spring-Loaded Hinge", image: lBracket },
+      { id: 1, name: "Freezer Hinge Assembly", image: freezerHingeAssembly },
     ],
   },
   {
     id: 2,
     name: "Press Components",
     products: [
-      { id: 4, name: "Mounting Plate", image: mountingPlate },
-      { id: 5, name: "Base Mounting Plate", image: basePlate },
-      { id: 6, name: "Threaded Insert Plate", image: threadedPlate },
-      { id: 7, name: "Gusset Plate", image: gussetPlate },
+      { id: 2, name: "Mounting Plate", image: mountingPlate },
+      { id: 3, name: "Base Mounting Plate", image: basePlate },
+      { id: 4, name: "Threaded Insert Plate", image: threadedPlate },
+      { id: 5, name: "Gusset Plate", image: gussetPlate },
+      { id: 6, name: "L-Bracket", image: lBracket },
+      { id: 7, name: "U-Bracket", image: uBracket },
+      { id: 8, name: "Z-Bracket", image: zBracket },
+      { id: 9, name: "Box Bracket", image: blackBracket },
     ],
   },
   {
     id: 3,
     name: "Filter Caps",
     products: [
-      { id: 8, name: "Brass Filter Cap Set", image: filterCapsImage },
-      { id: 9, name: "Filter End Cap", image: whiteTool },
-      { id: 10, name: "Threaded Filter Cap", image: whiteWrench },
+      { id: 10, name: "Brass Filter Cap", image: filterCapsImage },
     ],
   },
   {
     id: 4,
     name: "Deep Drawn Press Components",
     products: [
-      { id: 11, name: "Deep Drawn Cup", image: casterWheel },
-      { id: 12, name: "Cylindrical Housing", image: fanPanel },
-      { id: 13, name: "Conical Component", image: ventedPlate },
+      { id: 11, name: "Stainless Steel Deep Drawn Components", image: deepDrawnComponents },
+      { id: 12, name: "Copper Cylindrical Shell", image: copperShell },
     ],
   },
   {
     id: 5,
     name: "Clinching Clips",
     products: [
-      { id: 14, name: "Clinching Clip Strip", image: clinchingClipsImage },
-      { id: 15, name: "Retaining Clip", image: steelBracket },
-      { id: 16, name: "Panel Clinch Clip", image: uBracket },
+      { id: 13, name: "Clinching Strip", image: clinchingClipsImage },
     ],
   },
   {
     id: 6,
     name: "Caster Wheels",
     products: [
-      { id: 17, name: "Caster Wheel Assembly", image: casterWheel },
-      { id: 18, name: "Fixed Caster Bracket", image: motorBracket },
-      { id: 19, name: "Brake Caster Unit", image: foldedBracket },
+      { id: 14, name: "Caster", image: casterWheel },
     ],
   },
   {
     id: 7,
     name: "Sheet Metal Components",
     products: [
-      { id: 20, name: "Custom L-Bracket", image: lBracket },
-      { id: 21, name: "U-Channel Bracket", image: uBracket },
-      { id: 22, name: "Z-Bracket Assembly", image: zBracket },
-      { id: 23, name: "Box Bracket", image: blackBracket },
+      { id: 15, name: "Powder-Coated Metal Electrical Box", image: electricalBox },
     ],
   },
   {
     id: 8,
     name: "Freezer Parts",
     products: [
-      { id: 24, name: "Freezer Mounting Plate", image: freezerMountingPlate1 },
-      { id: 25, name: "Threaded Mount Plate", image: freezerThreadedMount },
-      { id: 26, name: "Freezer U-Bracket", image: freezerBlackUBracket },
-      { id: 27, name: "Z-Mount Bracket", image: freezerZMountBracket },
-      { id: 28, name: "Freezer Gusset Plate", image: freezerGussetPlate1 },
-      { id: 29, name: "Slotted Hinge Bracket", image: freezerSlottedHinge },
-      { id: 30, name: "Gusset Support Plate", image: freezerGussetPlate2 },
-      { id: 31, name: "Curved L-Bracket", image: freezerCurvedLBracket },
-      { id: 32, name: "Multi-Slot Mounting Plate", image: freezerMountingPlate2 },
+      { id: 16, name: "Freezer Mounting Plate", image: freezerMountingPlate1 },
+      { id: 17, name: "Freezer U-Bracket", image: freezerBlackUBracket },
+      { id: 18, name: "Z-Mount Bracket", image: freezerZMountBracket },
+      { id: 19, name: "Freezer Gusset Plate", image: freezerGussetPlate1 },
+      { id: 20, name: "Slotted Hinge Bracket", image: freezerSlottedHinge },
+      { id: 21, name: "Gusset Support Plate", image: freezerGussetPlate2 },
+      { id: 22, name: "Curved L-Bracket", image: freezerCurvedLBracket },
+      { id: 23, name: "Multi-Slot Mounting Plate", image: freezerMountingPlate2 },
     ],
   },
 ];
@@ -169,14 +153,12 @@ const Products = () => {
     );
   };
 
-  // Reset rotation when product changes
   useEffect(() => {
     if (selectedProduct) {
       setRotation({ x: 0, y: 0 });
     }
   }, [selectedProduct]);
 
-  // Handle mouse/touch drag for 360 rotation
   const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
     setIsDragging(true);
     const clientX = 'touches' in e ? e.touches[0].clientX : e.clientX;
@@ -266,7 +248,7 @@ const Products = () => {
                 </div>
               </button>
 
-              {/* Products Grid - Clean Image Cards */}
+              {/* Products Grid */}
               <AnimatePresence>
                 {expandedCategories.includes(category.id) && (
                   <motion.div
@@ -290,7 +272,7 @@ const Products = () => {
                             onClick={() => setSelectedProduct(product)}
                             className="group bg-background rounded-lg overflow-hidden border border-border hover:border-cta/50 hover:shadow-lg transition-all duration-300 cursor-pointer"
                           >
-                            {/* Product Image Only */}
+                            {/* Product Image */}
                             <div className="relative aspect-square bg-gradient-to-br from-steel-light to-white p-3 overflow-hidden">
                               <img
                                 src={product.image}
@@ -307,7 +289,7 @@ const Products = () => {
                               </div>
                             </div>
 
-                            {/* Product Name Only */}
+                            {/* Product Name */}
                             <div className="p-3 text-center">
                               <h4 className="font-heading font-semibold text-foreground text-xs md:text-sm line-clamp-2">
                                 {product.name}
@@ -346,7 +328,7 @@ const Products = () => {
         </motion.div>
       </div>
 
-      {/* Product 360° Viewer Modal - Visual First */}
+      {/* Product 360° Viewer Modal */}
       <Dialog open={!!selectedProduct} onOpenChange={() => setSelectedProduct(null)}>
         <DialogContent className="max-w-2xl p-0 overflow-hidden bg-background">
           {selectedProduct && (
