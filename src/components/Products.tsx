@@ -16,15 +16,15 @@ import electricalBox from "@/assets/products/electrical-box.png";
 import deepDrawnComponents from "@/assets/products/deep-drawn-components.png";
 import copperShell from "@/assets/products/copper-shell.png";
 
-// Press Components images (existing)
-import mountingPlate from "@/assets/products/mounting-plate.png";
-import basePlate from "@/assets/products/base-plate.png";
-import threadedPlate from "@/assets/products/threaded-plate.png";
-import gussetPlate from "@/assets/products/gusset-plate.png";
-import lBracket from "@/assets/products/l-bracket.png";
-import uBracket from "@/assets/products/u-bracket.png";
-import zBracket from "@/assets/products/z-bracket.png";
-import blackBracket from "@/assets/products/black-bracket.png";
+// Press Components images (8 exact images)
+import whiteTool from "@/assets/products/white-tool.png";
+import motorBracket from "@/assets/products/motor-bracket.png";
+import fanPanel from "@/assets/products/fan-panel.png";
+import hingeBracket from "@/assets/products/hinge-bracket.png";
+import ventedPlate from "@/assets/products/vented-plate.png";
+import steelBracket from "@/assets/products/steel-bracket.png";
+import foldedBracket from "@/assets/products/folded-bracket.png";
+import wrenchTool from "@/assets/products/wrench-tool.png";
 
 // Freezer Parts images
 import freezerMountingPlate1 from "@/assets/products/freezer-parts/mounting-plate-1.png";
@@ -49,14 +49,14 @@ const categories = [
     id: 2,
     name: "Press Components",
     products: [
-      { id: 2, name: "Mounting Plate", image: mountingPlate },
-      { id: 3, name: "Base Mounting Plate", image: basePlate },
-      { id: 4, name: "Threaded Insert Plate", image: threadedPlate },
-      { id: 5, name: "Gusset Plate", image: gussetPlate },
-      { id: 6, name: "L-Bracket", image: lBracket },
-      { id: 7, name: "U-Bracket", image: uBracket },
-      { id: 8, name: "Z-Bracket", image: zBracket },
-      { id: 9, name: "Box Bracket", image: blackBracket },
+      { id: 2, name: "Multi-Function Tool (White)", image: whiteTool },
+      { id: 3, name: "Motor Mounting Bracket", image: motorBracket },
+      { id: 4, name: "Fan Panel Plate", image: fanPanel },
+      { id: 5, name: "Hinge Bracket", image: hingeBracket },
+      { id: 6, name: "Perforated Vented Plate", image: ventedPlate },
+      { id: 7, name: "Steel U-Bracket", image: steelBracket },
+      { id: 8, name: "Louvered Vent Plate", image: foldedBracket },
+      { id: 9, name: "Multi-Function Wrench", image: wrenchTool },
     ],
   },
   {
