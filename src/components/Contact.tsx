@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
 import { z } from "zod";
 
 // Validation schema with proper limits and sanitization
@@ -57,7 +58,7 @@ const Contact = () => {
     e.preventDefault();
     setErrors({});
     
-    // Validate form data
+    // Client-side validation first
     const result = contactSchema.safeParse(formData);
     
     if (!result.success) {
@@ -79,16 +80,72 @@ const Contact = () => {
     
     setIsSubmitting(true);
     
-    // Simulate form submission (replace with actual backend call when implemented)
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    toast({
-      title: "Quote Request Sent!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    
-    setFormData({ name: "", company: "", email: "", phone: "", message: "" });
-    setIsSubmitting(false);
+    try {
+      // Submit to backend edge function for server-side validation
+      const { data, error } = await supabase.functions.invoke("submit-contact", {
+        body: formData,
+      });
+
+      if (error) {
+        console.error("Submission error:", error);
+        toast({
+          title: "Submission Failed",
+          description: "There was a problem sending your request. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (data?.error) {
+        // Handle rate limiting
+        if (data.message?.includes("exceeded")) {
+          toast({
+            title: "Too Many Requests",
+            description: data.message,
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        // Handle validation errors from server
+        if (data.errors) {
+          const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+          data.errors.forEach((err: { field: string; message: string }) => {
+            fieldErrors[err.field as keyof ContactFormData] = err.message;
+          });
+          setErrors(fieldErrors);
+          toast({
+            title: "Validation Error",
+            description: "Please check the form for errors.",
+            variant: "destructive",
+          });
+          return;
+        }
+        
+        toast({
+          title: "Submission Failed",
+          description: data.error || "An error occurred.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      toast({
+        title: "Quote Request Sent!",
+        description: data?.message || "We'll get back to you within 24 hours.",
+      });
+      
+      setFormData({ name: "", company: "", email: "", phone: "", message: "" });
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      toast({
+        title: "Submission Failed",
+        description: "An unexpected error occurred. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
