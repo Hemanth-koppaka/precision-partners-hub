@@ -5,6 +5,41 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { z } from "zod";
+
+// Validation schema with proper limits and sanitization
+const contactSchema = z.object({
+  name: z
+    .string()
+    .trim()
+    .min(1, { message: "Name is required" })
+    .max(100, { message: "Name must be less than 100 characters" })
+    .regex(/^[a-zA-Z\s\-.'']+$/, { message: "Name contains invalid characters" }),
+  company: z
+    .string()
+    .trim()
+    .max(100, { message: "Company name must be less than 100 characters" })
+    .optional()
+    .or(z.literal("")),
+  email: z
+    .string()
+    .trim()
+    .min(1, { message: "Email is required" })
+    .email({ message: "Please enter a valid email address" })
+    .max(255, { message: "Email must be less than 255 characters" }),
+  phone: z
+    .string()
+    .trim()
+    .min(1, { message: "Phone number is required" })
+    .regex(/^\+?[0-9\s\-()]{8,20}$/, { message: "Please enter a valid phone number" }),
+  message: z
+    .string()
+    .trim()
+    .min(10, { message: "Message must be at least 10 characters" })
+    .max(2000, { message: "Message must be less than 2000 characters" }),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 const Contact = () => {
   const { toast } = useToast();
@@ -15,13 +50,36 @@ const Contact = () => {
     phone: "",
     message: "",
   });
+  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrors({});
+    
+    // Validate form data
+    const result = contactSchema.safeParse(formData);
+    
+    if (!result.success) {
+      const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
+      result.error.errors.forEach((error) => {
+        const field = error.path[0] as keyof ContactFormData;
+        if (!fieldErrors[field]) {
+          fieldErrors[field] = error.message;
+        }
+      });
+      setErrors(fieldErrors);
+      toast({
+        title: "Validation Error",
+        description: "Please check the form for errors.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Simulate form submission (replace with actual backend call when implemented)
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     toast({
@@ -201,10 +259,11 @@ const Contact = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    required
+                    maxLength={100}
                     placeholder="John Doe"
-                    className="h-12"
+                    className={`h-12 ${errors.name ? 'border-destructive' : ''}`}
                   />
+                  {errors.name && <p className="text-destructive text-sm mt-1">{errors.name}</p>}
                 </div>
                 <div>
                   <label htmlFor="company" className="block text-sm font-medium text-foreground mb-2">
@@ -215,6 +274,7 @@ const Contact = () => {
                     name="company"
                     value={formData.company}
                     onChange={handleChange}
+                    maxLength={100}
                     placeholder="Your Company"
                     className="h-12"
                   />
@@ -232,10 +292,11 @@ const Contact = () => {
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    required
+                    maxLength={255}
                     placeholder="john@company.com"
-                    className="h-12"
+                    className={`h-12 ${errors.email ? 'border-destructive' : ''}`}
                   />
+                  {errors.email && <p className="text-destructive text-sm mt-1">{errors.email}</p>}
                 </div>
                 <div>
                   <label htmlFor="phone" className="block text-sm font-medium text-foreground mb-2">
@@ -247,10 +308,11 @@ const Contact = () => {
                     type="tel"
                     value={formData.phone}
                     onChange={handleChange}
-                    required
+                    maxLength={20}
                     placeholder="+91 98480 20840"
-                    className="h-12"
+                    className={`h-12 ${errors.phone ? 'border-destructive' : ''}`}
                   />
+                  {errors.phone && <p className="text-destructive text-sm mt-1">{errors.phone}</p>}
                 </div>
               </div>
 
@@ -263,11 +325,13 @@ const Contact = () => {
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
-                  required
+                  maxLength={2000}
                   rows={5}
                   placeholder="Tell us about your project requirements, quantity, specifications, etc."
-                  className="resize-none"
+                  className={`resize-none ${errors.message ? 'border-destructive' : ''}`}
                 />
+                {errors.message && <p className="text-destructive text-sm mt-1">{errors.message}</p>}
+                <p className="text-muted-foreground text-xs mt-1">{formData.message.length}/2000</p>
               </div>
 
               <Button 
