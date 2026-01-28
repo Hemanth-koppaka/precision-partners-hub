@@ -193,18 +193,35 @@ const Contact = () => {
           >
             {/* Contact Info Cards */}
             <div className="grid sm:grid-cols-2 gap-4">
-              {/* Address */}
-              <div className="bg-card rounded-xl p-5 border border-border col-span-2">
+              {/* Office Address */}
+              <div className="bg-card rounded-xl p-5 border border-border">
                 <div className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <MapPin className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <div className="text-sm text-muted-foreground mb-1">Address</div>
-                    <div className="font-semibold text-foreground">
+                    <div className="text-sm text-muted-foreground mb-1">Office Address</div>
+                    <div className="font-semibold text-foreground text-sm">
                       Vinayaka Complex, 10-6/1/B,<br />
                       Vinayak Nagar, Balanagar,<br />
                       Hyderabad, Telangana – 500042, India
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Registered Office */}
+              <div className="bg-card rounded-xl p-5 border border-border">
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <div className="text-sm text-muted-foreground mb-1">Regd. Office</div>
+                    <div className="font-semibold text-foreground text-sm">
+                      K. Nagabhushanam, 19 & 21, 10-6/1/B,<br />
+                      Vinayaka Complex, Vinayak Nagar,<br />
+                      Balanagar, Hyderabad, Telangana – 500042, India
                     </div>
                   </div>
                 </div>
