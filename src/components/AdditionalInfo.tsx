@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Building, MapPin } from "lucide-react";
+import pressToolImage from "@/assets/press-tool.png";
 
 const AdditionalInfo = () => {
   return (
@@ -17,38 +17,25 @@ const AdditionalInfo = () => {
           </span>
         </motion.div>
 
-        {/* Registered Office Box */}
+        {/* Tool Image Box */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.1 }}
-          className="max-w-2xl mx-auto"
+          className="max-w-md mx-auto"
         >
-          <div className="bg-card border border-border rounded-xl p-6 md:p-8 shadow-sm">
-            {/* Header */}
-            <div className="flex items-center gap-3 mb-4 pb-4 border-b border-border">
-              <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-                <Building className="w-5 h-5 text-primary" />
-              </div>
-              <h3 className="font-heading font-bold text-lg text-foreground">
-                Regd. Office
-              </h3>
+          <div className="bg-card border border-border rounded-xl p-6 shadow-sm">
+            <div className="aspect-square overflow-hidden rounded-lg">
+              <img
+                src={pressToolImage}
+                alt="Precision Press Tool - Industrial Manufacturing Equipment"
+                className="w-full h-full object-contain"
+              />
             </div>
-
-            {/* Address Content */}
-            <div className="flex items-start gap-4">
-              <MapPin className="w-5 h-5 text-muted-foreground flex-shrink-0 mt-0.5" />
-              <div className="text-foreground leading-relaxed">
-                <p className="font-semibold mb-1">K. Nagabhushanam</p>
-                <p className="text-muted-foreground">
-                  19 & 21, 10-6/1/B, Vinayaka Complex<br />
-                  Vinayak Nagar, Balanagar<br />
-                  Hyderabad, Telangana – 500042<br />
-                  India
-                </p>
-              </div>
-            </div>
+            <p className="text-center text-muted-foreground text-sm mt-4">
+              Precision Press Tool Manufacturing
+            </p>
           </div>
         </motion.div>
       </div>
