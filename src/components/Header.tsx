@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Mail, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.png";
+
+const WHATSAPP_NUMBER = "919848020840";
+const PREFILLED_MESSAGE = "Request Quote";
 
 const navLinks = [
   { label: "Home", href: "#home" },
@@ -23,6 +26,11 @@ const Header = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const openWhatsApp = () => {
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(PREFILLED_MESSAGE)}`;
+    window.open(url, "_blank");
+  };
 
   return (
     <>
@@ -83,8 +91,9 @@ const Header = () => {
 
             {/* CTA Button */}
             <div className="hidden lg:block">
-              <Button variant="hero" size="lg">
-                Request a Quote
+              <Button variant="hero" size="lg" onClick={openWhatsApp}>
+                <MessageCircle className="w-4 h-4 mr-2" />
+                WhatsApp Us
               </Button>
             </div>
 
@@ -116,8 +125,9 @@ const Header = () => {
                   {link.label}
                 </a>
               ))}
-              <Button variant="hero" className="mt-2 w-full">
-                Request a Quote
+              <Button variant="hero" className="mt-2 w-full" onClick={() => { setIsMobileMenuOpen(false); openWhatsApp(); }}>
+                <MessageCircle className="w-4 h-4 mr-2" />
+                WhatsApp Us
               </Button>
             </nav>
           </div>

@@ -1,6 +1,9 @@
 import { motion } from "framer-motion";
-import { ArrowRight, Shield, Clock, Award } from "lucide-react";
+import { ArrowRight, Shield, Clock, Award, MessageCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const WHATSAPP_NUMBER = "919848020840";
+const PREFILLED_MESSAGE = "Request Quote";
 
 const badges = [
   { icon: Shield, label: "ISO-Grade Quality" },
@@ -9,6 +12,15 @@ const badges = [
 ];
 
 const Hero = () => {
+  const scrollToProducts = () => {
+    document.getElementById("products")?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const openWhatsApp = () => {
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(PREFILLED_MESSAGE)}`;
+    window.open(url, "_blank");
+  };
+
   return (
     <section id="home" className="relative min-h-[90vh] bg-gradient-hero overflow-hidden">
       {/* Grid Pattern Overlay */}
@@ -53,11 +65,12 @@ const Hero = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button variant="hero" size="xl" className="group">
+              <Button variant="hero" size="xl" className="group" onClick={openWhatsApp}>
+                <MessageCircle className="w-5 h-5 mr-2" />
                 Request a Quote
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
               </Button>
-              <Button variant="heroOutline" size="xl">
+              <Button variant="heroOutline" size="xl" onClick={scrollToProducts}>
                 View Products
               </Button>
             </div>
