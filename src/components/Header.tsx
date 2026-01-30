@@ -66,13 +66,13 @@ const Header = () => {
         <div className="container mx-auto px-6">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <a href="#home" className="flex items-center gap-3">
-              <img src={logo} alt="Sri Chaitanya Industries Logo" className="h-14 w-auto" />
-              <div className="hidden sm:block">
-                <span className="font-heading font-bold text-xl text-primary">
+            <a href="#home" className="flex items-center gap-2 sm:gap-3">
+              <img src={logo} alt="Sri Chaitanya Industries Logo" className="h-10 sm:h-14 w-auto" />
+              <div>
+                <span className="font-heading font-bold text-sm sm:text-xl text-primary leading-tight">
                   Sri Chaitanya Industries
                 </span>
-                <p className="text-xs text-muted-foreground">Precision Press Components</p>
+                <p className="hidden sm:block text-xs text-muted-foreground">Precision Press Components</p>
               </div>
             </a>
 
