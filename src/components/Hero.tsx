@@ -65,11 +65,6 @@ const Hero = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button variant="hero" size="xl" className="group" onClick={openWhatsApp}>
-                <MessageCircle className="w-5 h-5 mr-2" />
-                Request a Quote
-                <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-              </Button>
               <Button variant="heroOutline" size="xl" onClick={scrollToProducts}>
                 View Products
               </Button>
