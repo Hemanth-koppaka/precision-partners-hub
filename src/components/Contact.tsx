@@ -110,19 +110,6 @@ const Contact = () => {
               </a>
             </div>
 
-            {/* WhatsApp */}
-            <div className="bg-card rounded-xl p-5 border border-border">
-              <div className="w-10 h-10 rounded-lg bg-[#25D366]/10 flex items-center justify-center mb-4">
-                <MessageCircle className="w-5 h-5 text-[#25D366]" />
-              </div>
-              <div className="text-sm text-muted-foreground mb-1">WhatsApp</div>
-              <button
-                onClick={openWhatsApp}
-                className="font-semibold text-foreground hover:text-[#25D366] transition-colors text-left"
-              >
-                Chat with us
-              </button>
-            </div>
           </motion.div>
 
           {/* Action Buttons */}
